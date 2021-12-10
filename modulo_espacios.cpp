@@ -4,8 +4,6 @@
 #include<conio.h>
 #include<string.h>
 
-/*hola*/
-
 struct fecha
 {
     int dia;
