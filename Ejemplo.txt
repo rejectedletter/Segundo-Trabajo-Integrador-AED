@@ -2,4 +2,8 @@
 
 2) cd Segundo-Trabajo-Integrador-AED
 
-3) 
+3) git add archivo
+
+4) git commit  -m "Archivo de texto explicativo"
+
+5) git push
