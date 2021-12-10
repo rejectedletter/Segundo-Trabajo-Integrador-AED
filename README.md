@@ -8,4 +8,4 @@ Integrantes:
 - Luna Maria Paula [Dni nro: ]
 - Martin Pimentel José Gonzalo []
 - Benegas Rodrigo Antonio
-- Zottola Rodrigo Leonardo
+- Zottola Rodrigo Leonardo [Legajo nro: 52742]
