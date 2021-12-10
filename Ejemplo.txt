@@ -1,9 +1,24 @@
-1) cd Desktop
+1) cd Desktop (para ubicarnos en el escritorio)
 
-2) cd Segundo-Trabajo-Integrador-AED
+2) cd Segundo-Trabajo-Integrador-AED (Para ubicarnos en el repositorio local)
 
-3) git add archivo
+3) git add archivo (para agregar el archivo)
 
-4) git commit  -m "Archivo de texto explicativo"
+4) git commit  -m "Archivo de texto explicativo" (Para subir el archivo con un mensaje entre comilllas)
 
-5) git push
+5) git push (Para subir los cambios en el repositorio)
+
+6) git pull (Para traer los cambios del repositorio remoto al local)
+
+
+
+ADICIONALES 
+
+- git status (para conocer el estado de los archivos)
+
+- clear (para limpiar la pantalla de la terminal)
+
+- ls (para saber que archivos tiene la carpeta donde estamos parados)
+
+cd .. (para regresar atras)
+
