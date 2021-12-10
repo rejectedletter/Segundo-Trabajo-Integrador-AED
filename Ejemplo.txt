@@ -10,6 +10,7 @@
 
 6) git pull (Para traer los cambios del repositorio remoto al local)
 
+7)prueba
 
 
 ADICIONALES 
