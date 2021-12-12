@@ -4,8 +4,6 @@
 #include<conio.h>
 #include<string.h>
 
-/*hola*/
-
 struct fecha
 {
     int dia;
@@ -48,15 +46,24 @@ struct Turnos
     char detalleAtencion[380];
 };
 
-void iniciarSesion();
+void iniciarSesion(FILE *puntero,bool &iniciar);
 
 main()
 {
 	system("COLOR 0A");
+	FILE *arch;
 	int num;
+	bool inicio=false;
 	
+	arch = fopen("Usuarios.dat","ab");
+	fclose(arch);
+	arch = fopen("Profesionales.dat","ab");
+	fclose(arch);
+	arch = fopen("Clientes.dat","ab");
+	fclose(arch);
+	arch = fopen("Turnos.dat","ab");
+	fclose(arch);
 	
-	cargar_registros(num_usuarios,num_vets,num_mascotas,num_turnos);
 	do
 	{
 		system("cls");
@@ -76,20 +83,36 @@ main()
 			case 1: 
 					system("cls");
 					printf("\nUsted ha elegido la opcion 'Iniciar Sesion'\n");
-					iniciarSesion();
+					arch = fopen("Usuarios.dat","ab");
+					iniciarSesion(arch,inicio);
+					fclose(arch);
 					system("pause");
 			        break;
 			case 2:
 					system("cls");
-					printf("\nUsted ha elegido la opcion 'Visulizar lista de espera de turnos (Informe)'\n");
+					if(inicio == true)
+					{
+						printf("\nUsted ha elegido la opcion 'Visulizar lista de espera de turnos (Informe)'\n");
 					
-					system("pause");
+						system("pause");
+					}
+					else
+					{
+						printf("\nUsted no ha iniciado sesion.");
+					}
 			        break;
 			case 3:
 					system("cls");
-				    printf("\nUsted ha elegido la opcion 'Registrar evolucion del tratamiento'\n");
+					if(inicio == true)
+					{
+						printf("\nUsted ha elegido la opcion 'Registrar evolucion del tratamiento'\n");
 				  	
-				  	system("pause");
+				  		system("pause");
+					}
+				    else
+				    {
+				    	printf("\nUsted no ha iniciado sesion.");
+				    }
 				 	break;
 					
 			case 4:
@@ -98,7 +121,31 @@ main()
 	}
 	while(num!=4);
 	
+}
+
+void iniciarSesion(FILE *puntero,bool &iniciar)
+{
+	Usuario user;
+	char nombreDeUsuario[10];
+	char clave[10];
 	
+	printf("\nNombre de usuario: ");
+	_flushall();
+	gets(nombreDeUsuario);
 	
+	printf("\nContraseña: ");
+	_flushall();
+	gets(clave);
 	
+	fread(&user,sizeof(Usuario),1,puntero);
+	while(!feof(puntero))
+	{
+		if((strcmp(user.usuario,nombreDeUsuario) && strcmp(user.clave,clave)) == 0)
+		{
+			iniciar=true;
+			printf("\nSesion iniciada!");
+			break;
+		}
+		fread(&user,sizeof(Usuario),1,puntero);
+	}
 }
