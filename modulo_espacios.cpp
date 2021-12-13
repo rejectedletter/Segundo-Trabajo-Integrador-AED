@@ -44,15 +44,18 @@ struct Turnos
     fecha fechaTurno;
     int dniCliente;
     char detalleAtencion[380];
+    int mostrado;
 };
 
-void iniciarSesion(FILE *puntero,bool &iniciar);
+void iniciarSesion(FILE *puntero,bool &iniciar,int &id);
+void listado(FILE *puntero,FILE *puntero2,int id);
+void registrarEvolucion(FILE *puntero,int id);
 
 main()
 {
 	system("COLOR 0A");
-	FILE *arch;
-	int num;
+	FILE *arch,*p;
+	int num,id;
 	bool inicio=false;
 	
 	arch = fopen("Usuarios.dat","ab");
@@ -67,7 +70,7 @@ main()
 	do
 	{
 		system("cls");
-		printf("Modulo espacios\n");
+		printf("\nModulo espacios\n");
     	printf("========================================================================");
 		printf("\n\nIngrese el numero de opcion\n\n");
 		printf("1---> Iniciar Sesion\n");
@@ -84,7 +87,7 @@ main()
 					system("cls");
 					printf("\nUsted ha elegido la opcion 'Iniciar Sesion'\n");
 					arch = fopen("Usuarios.dat","ab");
-					iniciarSesion(arch,inicio);
+					iniciarSesion(arch,inicio,id);
 					fclose(arch);
 					system("pause");
 			        break;
@@ -93,7 +96,11 @@ main()
 					if(inicio == true)
 					{
 						printf("\nUsted ha elegido la opcion 'Visulizar lista de espera de turnos (Informe)'\n");
-					
+						arch = fopen("Turnos.dat","rb");
+						p = fopen("Cliente.dat","rb");
+						listado(arch,p,id);
+						fclose(arch);
+						fclose(p);
 						system("pause");
 					}
 					else
@@ -106,7 +113,9 @@ main()
 					if(inicio == true)
 					{
 						printf("\nUsted ha elegido la opcion 'Registrar evolucion del tratamiento'\n");
-				  	
+				  		arch = fopen("Turnos.dat","r+b");
+						registrarEvolucion(arch,id);
+						fclose(arch);
 				  		system("pause");
 					}
 				    else
@@ -123,9 +132,10 @@ main()
 	
 }
 
-void iniciarSesion(FILE *puntero,bool &iniciar)
+void iniciarSesion(FILE *puntero,bool &iniciar,int &id)
 {
 	Usuario user;
+	Profesional prof;
 	char nombreDeUsuario[10];
 	char clave[10];
 	
@@ -144,8 +154,91 @@ void iniciarSesion(FILE *puntero,bool &iniciar)
 		{
 			iniciar=true;
 			printf("\nSesion iniciada!");
+			id=prof.idProfesional;
 			break;
 		}
 		fread(&user,sizeof(Usuario),1,puntero);
+	}
+}
+
+void listado(FILE *puntero,FILE *puntero2,int id)
+{
+    fecha buscar;
+    Turnos paciente; 
+	Cliente reg;
+	
+    printf("\nIngrese la fecha: ");
+    printf("\nDia: ");
+    scanf("%d",&buscar.dia);
+    printf("\nMes: ");
+    scanf("%d",&buscar.mes);
+    printf("\nAnio: ");
+    scanf("%d",&buscar.anio);
+
+	system("cls");
+	printf("Pacientes para ser atendidos: ");
+	
+	fread(&paciente,sizeof(Turnos),1,puntero);
+	fread(&reg,sizeof(Cliente),1,puntero2);
+    while(!feof(puntero) && !feof(puntero2))
+    {
+    	if(paciente.mostrado == 0)
+    	{
+    		if(buscar.dia == paciente.fechaTurno.dia && buscar.mes == paciente.fechaTurno.dia && buscar.anio == paciente.fechaTurno.anio)
+    		{
+    			printf("\nApellido y nombres: %s",reg.apeNom);
+    			printf("\nDni: %d",reg.dniCliente);
+    			printf("\nDomicilio: %s",reg.domicilio);
+    			printf("\nEdad: %d",2021-reg.fecnac.anio);
+				printf("\nPeso: %f",reg.peso);	
+				printf("\n===========================================");
+    		}
+    	}
+    	fread(&buscar,sizeof(fecha),1,puntero);	
+    	fread(&reg,sizeof(Cliente),1,puntero2);
+    } 
+}
+
+void registrarEvolucion(FILE *puntero,int id)
+{
+	fecha buscar;
+    Turnos paciente; 
+    Cliente reg;
+    char buscarApeNom[60];
+    bool b=false;
+    	
+	printf("\nIngrese el apellido y nombre del cliente que atendera: ");
+    _flushall();
+    gets(buscarApeNom);
+    strupr(buscarApeNom);
+    
+    fread(&paciente,sizeof(Cliente),1,puntero);
+    while(!feof(puntero))
+    {
+    	if(buscar.dia == paciente.fechaTurno.dia && buscar.mes == paciente.fechaTurno.dia && buscar.anio == paciente.fechaTurno.anio)
+    	{
+    		if((strcmp(buscarApeNom,reg.apeNom)==0) && paciente.mostrado==0)
+    		{
+    			printf("\nEvolucion de los tratamientos dados: ");
+    			_flushall();
+    			gets(paciente.detalleAtencion);
+    			printf("\n\nIngrese la fecha de atencion: ");
+    			printf("\nDia: ");
+    			scanf("%d",&paciente.fechaTurno.dia);
+    			printf("\nMes: ");
+    			scanf("%d",&paciente.fechaTurno.mes);
+    			printf("\nAnio: ");
+    			scanf("%d",&paciente.fechaTurno.anio);
+    			paciente.idProfesional = id;
+    			paciente.mostrado = 1;
+    			b=true;
+    		}
+    	}
+    	fread(&buscar,sizeof(fecha),1,puntero);	
+    }
+
+	if(b==false)
+	{
+		printf("\nError. Apellido y nombres incorrectos.");
 	}
 }
