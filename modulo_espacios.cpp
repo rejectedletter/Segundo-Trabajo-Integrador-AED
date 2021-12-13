@@ -217,7 +217,6 @@ void registrarEvolucion(FILE *puntero,int id)
 	printf("\nIngrese el apellido y nombre del cliente que atendera: ");
     _flushall();
     gets(buscarApeNom);
-    strupr(buscarApeNom);
     
     fread(&paciente,sizeof(Cliente),1,puntero);
     while(!feof(puntero))

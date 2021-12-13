@@ -101,9 +101,7 @@ main()
 				printf("Ingrese nombre de usuario: ");
 				_flushall();
 				gets(usuario);
-				
-				filtronombre=verificacionnombre(Usuarioprofesional,usuario);
-				
+			
 				while(filtronombre==false)
 				{
 					printf("\n----------\n\n");
@@ -126,7 +124,7 @@ main()
 					_flushall();
 					gets(usuario);
 					
-					filtronombre=verificacionnombre(Usuarioprofesional, usuario);
+					filtronombre=verificacionnombre(Usuarioprofesional,usuario);
 				}
 				
 				printf("\n-NOMBRE CORRECTO-\n");
@@ -148,7 +146,7 @@ main()
 				gets(clave);
 				
 				filtroclave = verificacionclave(clave);
-				
+			
 				while(filtroclave==false)
 				{
 					printf("\n----------\n\n");
@@ -614,10 +612,9 @@ void registracionconfirmada(int vou, char nombre[15], char contra[35])
 		scanf("%d", &datosconfirmado.idProfesional);
 		
 		printf("\n Ingresar DNI del Profesional: ");
+		_flushall();
 		scanf("%d", &datosconfirmado.dni);
 		
-		printf("\nIngresar número telefonico del profesional: ");
-		_flushall();
 		
 		gets(datosconfirmado.telefono);
 		
