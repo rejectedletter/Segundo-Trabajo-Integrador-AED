@@ -104,8 +104,8 @@ main()
 				_flushall();
 				gets(usuario);
 				
-				filtronombre=verificacionnombre(Usuarioprofesional, usuario);
-				
+			filtronombre=verificacionnombre(Usuarioprofesional, usuario);
+				filtronombre=true;
 				while(filtronombre==false)
 				{
 					printf("\n----------\n\n");
@@ -150,7 +150,7 @@ main()
 				gets(clave);
 				
 				filtroclave = verificacionclave(clave);
-				
+			
 				while(filtroclave==false)
 				{
 					printf("\n----------\n\n");
@@ -622,6 +622,7 @@ void registracionconfirmada(int vou, char nombre[15], char contra[35])
 		scanf("%d", &datosconfirmado.dni);
 		
 		printf("\nIngresar número telefonico del veterinario: ");
+		scanf("%s", &datosconfirmado.telefono);
 		_flushall();
 		
 		gets(datosconfirmado.telefono);
