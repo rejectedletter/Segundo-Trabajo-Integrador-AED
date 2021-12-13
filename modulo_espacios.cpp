@@ -1,8 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include<math.h>
-#include<conio.h>
 #include<string.h>
+#include<locale.h>
 
 struct fecha
 {
@@ -44,7 +43,7 @@ struct Turnos
     fecha fechaTurno;
     int dniCliente;
     char detalleAtencion[380];
-    int mostrado;
+    bool borrado;
 };
 
 void iniciarSesion(FILE *puntero,bool &iniciar,int &id);
@@ -53,6 +52,7 @@ void registrarEvolucion(FILE *puntero,int id);
 
 main()
 {
+	setlocale(LC_ALL,"spanish");
 	system("COLOR 0A");
 	FILE *arch,*p;
 	int num,id;
@@ -71,12 +71,12 @@ main()
 	{
 		system("cls");
 		printf("\nModulo espacios\n");
-    	printf("========================================================================");
+    	printf("================================================");
 		printf("\n\nIngrese el numero de opcion\n\n");
-		printf("1---> Iniciar Sesion\n");
-		printf("2---> Visulizar lista de espera de turnos (Informe)\n");
-		printf("3---> Registrar evolucion del tratamiento\n");
-		printf("4---> Salir\n");
+		printf("1.- Iniciar Sesion\n");
+		printf("2.- Visulizar lista de espera de turnos (Informe)\n");
+		printf("3.- Registrar evolucion del tratamiento\n");
+		printf("4.- Cerrar la aplicacion\n");
 		
 		printf("\nOpcion a seleccionar: ");
 		scanf("%d",&num);	
@@ -86,7 +86,7 @@ main()
 			case 1: 
 					system("cls");
 					printf("\nUsted ha elegido la opcion 'Iniciar Sesion'\n");
-					arch = fopen("Usuarios.dat","ab");
+					arch = fopen("Profesionales.dat","rb");
 					iniciarSesion(arch,inicio,id);
 					fclose(arch);
 					system("pause");
@@ -150,14 +150,21 @@ void iniciarSesion(FILE *puntero,bool &iniciar,int &id)
 	fread(&user,sizeof(Usuario),1,puntero);
 	while(!feof(puntero))
 	{
-		if((strcmp(user.usuario,nombreDeUsuario) && strcmp(user.clave,clave)) == 0)
+		if(strcmp(user.usuario,nombreDeUsuario) == 0)
 		{
-			iniciar=true;
-			printf("\nSesion iniciada!");
-			id=prof.idProfesional;
-			break;
+			if(strcmp(user.clave,clave) == 0)
+			{
+				iniciar=true;
+				printf("\nSesion iniciada!");
+				id=prof.idProfesional;
+				break;
+			}	
 		}
 		fread(&user,sizeof(Usuario),1,puntero);
+	}
+	if(iniciar == false)
+	{
+		printf("\nNo se ha podido iniciar sesion.\n\n");
 	}
 }
 
@@ -182,7 +189,7 @@ void listado(FILE *puntero,FILE *puntero2,int id)
 	fread(&reg,sizeof(Cliente),1,puntero2);
     while(!feof(puntero) && !feof(puntero2))
     {
-    	if(paciente.mostrado == 0)
+    	if(paciente.borrado == false)
     	{
     		if(buscar.dia == paciente.fechaTurno.dia && buscar.mes == paciente.fechaTurno.dia && buscar.anio == paciente.fechaTurno.anio)
     		{
@@ -217,7 +224,7 @@ void registrarEvolucion(FILE *puntero,int id)
     {
     	if(buscar.dia == paciente.fechaTurno.dia && buscar.mes == paciente.fechaTurno.dia && buscar.anio == paciente.fechaTurno.anio)
     	{
-    		if((strcmp(buscarApeNom,reg.apeNom)==0) && paciente.mostrado==0)
+    		if((strcmp(buscarApeNom,reg.apeNom)==0) && paciente.borrado==false)
     		{
     			printf("\nEvolucion de los tratamientos dados: ");
     			_flushall();
@@ -230,7 +237,7 @@ void registrarEvolucion(FILE *puntero,int id)
     			printf("\nAnio: ");
     			scanf("%d",&paciente.fechaTurno.anio);
     			paciente.idProfesional = id;
-    			paciente.mostrado = 1;
+    			paciente.borrado = true;
     			b=true;
     		}
     	}

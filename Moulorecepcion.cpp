@@ -4,20 +4,6 @@
 #include<string.h>
 #include<locale.h>
 
-struct usuarios
-{
-	char Usuario[10];
-	char clave[10];
-	char ApeNom[60];	
-};
-
-struct profesional
-{
-	char ApeNom[60];
-    int idprofesional;
-	char Telefono[25];
-};
-
 struct fecha
 {
     int dia;
@@ -25,23 +11,39 @@ struct fecha
     int anio;
 };
 
-struct Cliente
+struct Usuario 
 {
-	char ApeNom[60];
-	char Domicilio[60];
-	int DNI_Cliente;
-	char Localidad[60];
-	fecha fechanacimiento;
-	float Peso;
-	char Telefono[25];
+	char usuario[10];
+    char clave[10];
+    char apeNom[60]; 
+};
+
+struct  Profesional
+{
+	char apeNom [60];
+	int idProfesional;
+	int  dni;
+	char telefono[25];
+};
+
+
+struct Cliente 
+{
+	char apeNom [60];
+	char domicilio[60];
+	int dniCliente;
+	char localidad [60];
+	fecha fecnac ;
+	float peso ;
+	char telefono[25];
 };
 
 struct turnos
 {
-	int idprofesional;
-	fecha fechaturno;
+	int idProfesional;
+	fecha fechaTurno;
 	int dniCliente;
-	char detalle[380];	
+	char detalle [380];	
 	bool borrado;
 };
 
@@ -62,8 +64,8 @@ main()
 	do{
 		system("cls");
 		
-		printf("Módulo del Asistente\n");
-		printf("==============================\n");
+		printf("\nMódulo de Recepción\n");
+		printf("=================================================\n\n");
 		
 		printf("1.- Iniciar sesión\n");
 		printf("2.- Registrar Cliente\n");
@@ -227,13 +229,13 @@ bool iniciosesion()
 {
 	FILE *arch;
 	
-	usuarios comparacion;
+	Usuario comparacion;
 	
 	bool confirmacion=false;
 	
-	char usuario[15], contrasena[35];	
+	char usuario[15],contrasena[35];	
 		
-	arch=fopen("Usuarios.dat", "rb");
+	arch=fopen("Recepcionistas.dat","rb");
 	
 	if(arch==NULL)
 	{
@@ -253,24 +255,21 @@ bool iniciosesion()
 		
 		gets(contrasena);
 		
-		fread(&comparacion, sizeof(usuarios), 1, arch);
+		fread(&comparacion, sizeof(Usuario),1,arch);
 	
 		while(!feof(arch))
 		{
-			if(strcmp(usuario, comparacion.Usuario)==0)
+			if(strcmp(usuario,comparacion.usuario)==0)
 			{
-				if(strcmp(contrasena, comparacion.clave)==0)
+				if(strcmp(contrasena,comparacion.clave)==0)
 				{
 					confirmacion=true;
-					
-					fseek(arch, 0, SEEK_END);
 				}
 			}
 			
-			fread(&comparacion, sizeof(usuarios), 1, arch);
+			fread(&comparacion, sizeof(Usuario), 1, arch);
 		}
 	}
-	
 	return confirmacion;
 }
 
@@ -283,36 +282,36 @@ void registroCliente()
 	printf("Apellido y Nombre: ");
 	_flushall();
 	
-	gets(registro.ApeNom);
+	gets(registro.apeNom);
 	
 	printf("\nDomicilio: ");
 	_flushall();
 	
-	gets(registro.Domicilio);
+	gets(registro.domicilio);
 	
 	printf("\nDNI: ");
-	scanf("%d", &registro.DNI_Cliente);
+	scanf("%d", &registro.dniCliente);
 	
 	printf("\nFecha de nacimiento: ");
 	printf("\nDia: ");
-	scanf("%d", &registro.fechanacimiento.dia);	
+	scanf("%d", &registro.fecnac.dia);	
 	printf("Mes: ");
-	scanf("%d", &registro.fechanacimiento.mes);
+	scanf("%d", &registro.fecnac.mes);
 	printf("Año: ");
-	scanf("%d", &registro.fechanacimiento.anio);
+	scanf("%d", &registro.fecnac.anio);
 	
 	printf("\nLocalidad: ");
 	_flushall();
 	
-	gets(registro.Localidad);
+	gets(registro.localidad);
 	
 	printf("\nPeso: ");
-	scanf("%f", &registro.Peso);
+	scanf("%f", &registro.peso);
 	
 	printf("\nNúmero telefonico: ");
 	_flushall();
 	
-	gets(registro.Telefono);
+	gets(registro.telefono);
 	
 	arch=fopen("Cliente.dat", "ab+");
 	
@@ -329,8 +328,8 @@ void registroturno()
 	
 	bool matriculaencontrada=false, dniencontrado=false;
 	
-	usuarios aux;
-	profesional aux2;
+	Usuario aux;
+	Profesional aux2;
 	Cliente aux3;
 	
 	turnos registro;
@@ -340,18 +339,18 @@ void registroturno()
 	
 	arch=fopen("Profesionales.dat", "rb");
 	
-	fread(&aux, sizeof(usuarios), 1, arch);
+	fread(&aux, sizeof(Usuario), 1, arch);
 	
 	while(!feof(arch))
 	{
-		fread(&aux2, sizeof(profesional), 1, arch);
+		fread(&aux2, sizeof(Profesional), 1, arch);
 		
-		if(matricula==aux2.idprofesional)
+		if(matricula==aux2.idProfesional)
 		{
 			matriculaencontrada=true;
 		}
 		
-		fread(&aux, sizeof(usuarios), 1, arch);
+		fread(&aux, sizeof(Usuario),1,arch);
 	}
 	
 	fclose(arch);
@@ -363,34 +362,34 @@ void registroturno()
 		printf("Matricula deL Profesional  que va a atender a la Cliente: ");
 		scanf("%d", &matricula);
 		
-		arch=fopen("Profesionales.dat", "rb");
+		arch=fopen("Profesionales.dat","rb");
 		
-		fread(&aux, sizeof(usuarios), 1, arch);
+		fread(&aux, sizeof(Usuario),1,arch);
 		
 		while(!feof(arch))
 		{
-			fread(&aux2, sizeof(profesional), 1, arch);
+			fread(&aux2, sizeof(Profesional),1,arch);
 			
-			if(matricula==aux2.idprofesional)
+			if(matricula==aux2.idProfesional)
 			{
 				matriculaencontrada=true;
 			}
 			
-			fread(&aux, sizeof(usuarios), 1, arch);
+			fread(&aux, sizeof(Usuario),1,arch);
 		}
 		
 		fclose(arch);
 	}
 	
-	registro.idprofesional=matricula;
+	registro.idProfesional=matricula;
 	
 	printf("\nFecha de la consulta: ");
 	printf("\nDia: ");
-	scanf("%d", &registro.fechaturno.dia);	
+	scanf("%d", &registro.fechaTurno.dia);	
 	printf("Mes: ");
-	scanf("%d", &registro.fechaturno.mes);
+	scanf("%d", &registro.fechaTurno.mes);
 	printf("Año: ");
-	scanf("%d", &registro.fechaturno.anio);
+	scanf("%d", &registro.fechaTurno.anio);
 	
 	printf("\nDNI del Cliente: ");
 	scanf("%d", &dni);
@@ -401,7 +400,7 @@ void registroturno()
 	
 	while(!feof(arch))
 	{
-		if(dni==aux3.DNI_Cliente)
+		if(dni==aux3.dniCliente)
 		{
 			dniencontrado=true;
 		}
@@ -420,16 +419,16 @@ void registroturno()
 		
 		arch=fopen("Cliente.dat", "rb");
 		
-		fread(&aux3, sizeof(Cliente), 1, arch);
+		fread(&aux3, sizeof(Cliente),1,arch);
 		
 		while(!feof(arch))
 		{
-			if(dni==aux3.DNI_Cliente)
+			if(dni==aux3.dniCliente)
 			{
 				dniencontrado=true;
 			}
 			
-			fread(&aux3, sizeof(Cliente), 1, arch);
+			fread(&aux3, sizeof(Cliente),1,arch);
 		}
 		
 		fclose(arch);
@@ -487,19 +486,19 @@ void listadoturnos()
 			
 			while(!feof(arch2))
 			{	
-				if(dni==aux.DNI_Cliente)
+				if(dni==aux.dniCliente)
 				{
-					strcpy(Cliente, aux.ApeNom);
+					strcpy(Cliente,aux.apeNom);
 				}
 				
-				fread(&aux, sizeof(Cliente), 1, arch2);
+				fread(&aux,sizeof(Cliente),1,arch2);
 			}
 			
 			fseek(arch2, 0, SEEK_SET);
 			
 			if(registro.borrado==false)
 			{
-				printf("%-0.2d/%-0.2d/%*d|%*d|%*s\n", registro.fechaturno.dia, registro.fechaturno.mes, -8, registro.fechaturno.anio, -12, registro.idprofesional, -30, Cliente);
+				printf("%-0.2d/%-0.2d/%*d|%*d|%*s\n", registro.fechaTurno.dia, registro.fechaTurno.mes, -8, registro.fechaTurno.anio, -12, registro.idProfesional, -30, Cliente);
 			}
 			
 			fread(&registro, sizeof(turnos), 1, arch);

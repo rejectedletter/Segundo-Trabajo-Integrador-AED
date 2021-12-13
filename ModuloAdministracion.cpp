@@ -16,7 +16,6 @@ struct Usuario
 	char usuario[10];
     char clave[10];
     char apeNom[60]; 
-
 };
 
 struct  Profesional
@@ -57,24 +56,23 @@ void ranking();
 main()
 {
 	setlocale(LC_ALL,"spanish");
+	system("COLOR 0A");
 	
-	int opcionmenu, Usuarioprofesional;
-	
-	char usuario[10], clave[35], apellidonombre[60];
-	
-	bool filtronombre, filtroclave;
+	int opcionmenu,Usuarioprofesional;
+	char usuario[10],clave[35],apellidonombre[60];
+	bool filtronombre,filtroclave;
 	
 	do
 	{
 		system("cls");
 		
-		printf("Módulo de Administración\n");
-		printf("==============================\n");
+		printf("\nMódulo de Administración\n");
+		printf("===========================================\n\n");
 		
 		printf("1.- Registrar Profesional\n");
 		printf("2.- Registrar Usuario Recepcionista\n");
-		printf("3.- Atencion por Profesional\n");
-		printf("4.- Ranking de Profesionales  por Atencion\n\n");
+		printf("3.- Atención por Profesional\n");
+		printf("4.- Ranking de Profesionales por Atención\n\n");
 		printf("5.- Cerrar la aplicación\n\n");
 		
 		printf("Ingrese una opción: ");
@@ -104,7 +102,7 @@ main()
 				_flushall();
 				gets(usuario);
 				
-				filtronombre=verificacionnombre(Usuarioprofesional, usuario);
+				filtronombre=verificacionnombre(Usuarioprofesional,usuario);
 				
 				while(filtronombre==false)
 				{
@@ -177,7 +175,7 @@ main()
 				
 				printf("\n-CONTRASEÑA CORRECTA-\n\n");
 				
-				registracionconfirmada(Usuarioprofesional, usuario, clave);
+				registracionconfirmada(Usuarioprofesional,usuario,clave);
 				
 				printf("\n\n>>>USUARIO REGISTRADO CORRECTAMENTE<<<\n");
 				
@@ -327,12 +325,10 @@ main()
 	}while(opcionmenu!=5);
 }
 
-bool verificacionnombre(int vou, char nombre[15])
+bool verificacionnombre(int vou,char nombre[15])
 {
-	int i, tamano, contadormayusculas=0, contadordigitos=0;
-	
+	int i,tamano,contadormayusculas=0,contadordigitos=0;
 	bool controldigitos, filtro, verificacion;
-	
 	Usuario aux;
 	
 	tamano=strlen(nombre);
@@ -419,7 +415,7 @@ bool verificacionnombre(int vou, char nombre[15])
 	
 	if(vou==0)
 	{
-		arch=fopen("Profesionales.dat", "rb");
+		arch=fopen("Profesionales.dat","rb");
 	
 		if(arch==NULL)
 		{
@@ -436,8 +432,7 @@ bool verificacionnombre(int vou, char nombre[15])
 					verificacion=false;
 					
 					return verificacion;
-				}
-				
+				}	
 				fread(&aux, sizeof(Usuario), 1, arch);
 			}
 		}
@@ -602,7 +597,7 @@ void registracionconfirmada(int vou, char nombre[15], char contra[35])
 	
 	if(vou==0)
 	{
-		arch=fopen("Profesionales.dat", "ab+");
+		arch=fopen("Profesionales.dat","ab");
 	
 		Usuario confirmado;
 		Profesional datosconfirmado;
@@ -611,17 +606,17 @@ void registracionconfirmada(int vou, char nombre[15], char contra[35])
 		strcpy(confirmado.clave, clave);
 		strcpy(confirmado.apeNom, apeNom);
 		
-		fwrite(&confirmado, sizeof(Usuario), 1, arch);
+		fwrite(&confirmado,sizeof(Usuario),1,arch);
 		
 		strcpy(datosconfirmado.apeNom, apeNom);
 		
-		printf("\nIngresar matricula del Profesional: ");
+		printf("\nIngresar id del Profesional: ");
 		scanf("%d", &datosconfirmado.idProfesional);
 		
 		printf("\n Ingresar DNI del Profesional: ");
 		scanf("%d", &datosconfirmado.dni);
 		
-		printf("\nIngresar número telefonico del veterinario: ");
+		printf("\nIngresar número telefonico del profesional: ");
 		_flushall();
 		
 		gets(datosconfirmado.telefono);
@@ -630,18 +625,16 @@ void registracionconfirmada(int vou, char nombre[15], char contra[35])
 	}
 	else
 	{
-		arch=fopen("Recepcionistas.dat", "ab+");
+		arch=fopen("Recepcionistas.dat","a+b");
 	
 		Usuario confirmado;
 		
-		strcpy(confirmado.usuario, nombre);
-		strcpy(confirmado.clave, clave);
-		strcpy(confirmado.apeNom, apeNom);
+		strcpy(confirmado.usuario,nombre);
+		strcpy(confirmado.clave,clave);
+		strcpy(confirmado.apeNom,apeNom);
 		
-		fwrite(&confirmado, sizeof(Usuario), 1, arch);
+		fwrite(&confirmado,sizeof(Usuario),1,arch);
 	}
-	
-	
 	fclose(arch);
 }
 
