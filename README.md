@@ -5,7 +5,7 @@
 Integrantes:
 
 - Toledo Alvaro Julian [Legajo nro: 52721]
-- Luna Maria Paula [Dni nro: ]
+- Luna Maria Paula [Dni nro: 39975846]
 - Martin Pimentel José Gonzalo[Legajo nro: 53538]    
 - Benegas Rodrigo Antonio  [Legajo nro : 41209]
 - Zottola Rodrigo Leonardo [Legajo nro: 52742]
