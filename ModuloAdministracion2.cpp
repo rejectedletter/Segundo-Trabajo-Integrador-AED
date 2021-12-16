@@ -10,6 +10,13 @@
 main()
 {
 	//Leer todo
+	FILE *arch;
+	
+		arch = fopen("Usuarios.dat","r+b"); //si no existe lo abro creando
+	
+	if(arch == NULL){ //
+		arch = fopen("Usuarios.dat","a+b"); 
+	}
 	
 	FILE *archProfesional;
 	
@@ -47,7 +54,7 @@ main()
 			case 2:
 				system("cls");
 				
-				AgregarUsuario();
+				CrearUsuario(arch);
 				
 				printf("\n>");
 				system("pause");

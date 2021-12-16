@@ -11,7 +11,7 @@ bool VerificarNomenclaturaNombreUsuario(char nombre[10])
 	int contadorNumeros = 0;
 	int contadordigitos=0;
 	
-	bool esValido=false;
+	int esValido=false;
 	
 	
 	
@@ -19,7 +19,7 @@ bool VerificarNomenclaturaNombreUsuario(char nombre[10])
 	
     if(tamano<6 || tamano>10)
 	{
-		esValido=false;
+		esValido=0;
 	}
 		
 	for(int i=0;i<tamano;i++)
@@ -27,7 +27,7 @@ bool VerificarNomenclaturaNombreUsuario(char nombre[10])
 		
 		if(i == 0 && nombre[i]<=122 && nombre[i]>=97)
 		{
-			esValido = true;
+			esValido = 1;
 		}
 		
 		if(nombre[i]==33 || nombre[i]==42 || nombre[i]==43 || nombre[i]==45 || nombre[i]==47 || nombre[i]==63 || nombre[i]==168 || nombre[i]==173)
@@ -58,19 +58,19 @@ bool VerificarNomenclaturaNombreUsuario(char nombre[10])
 	
 	if(contadordigitos + contadorNumeros == 3 && contadormayusculas == 2)
 	{
-		esValido = true;
+		esValido = 1;
 	}	
 	
 	return esValido;
 	
 }
 
-bool VerificarNomenclaturaPassword(char clave[10])
+int VerificarNomenclaturaPassword(char clave[10])
 {
 	int tamano = 0; 
 	int contadormayusculas=0, contadorminusculas=0, contadornumeros=0, numdigito;
 	
-	bool esValido = false;
+	int esValido = 0;
 	
 	tamano=strlen(clave);
 	
@@ -78,14 +78,14 @@ bool VerificarNomenclaturaPassword(char clave[10])
 	
 	if(tamano<6 || tamano>32)
 	{
-		return false;
+		return 0;
 	}
 	
 	for(int i=0;i<tamano;i++)
 	{	
 		if(clave[i]==32 || clave[i]==33 || clave[i]==40 || clave[i]==44 || clave[i]==45 || clave[i]==46 || clave[i]==58 || clave[i]==59 || clave[i]==63 || clave[i]==91 || clave[i]==95 || clave[i]==168 || clave[i]==173)
 		{
-			return false;
+			return 0;
 		}
 		
 			
@@ -101,7 +101,7 @@ bool VerificarNomenclaturaPassword(char clave[10])
 			if(clave[i+1]==numdigito+1 && clave[i+2] == numdigito+1)
 			{
 				
-				return false;
+				return 0;
 				
 		   }
 	   }
@@ -115,7 +115,7 @@ bool VerificarNomenclaturaPassword(char clave[10])
 					
 			if(clave[i+1]==numdigito+1)
 			{
-				return false;
+				return 0;
 				
 			}
 	   }
@@ -128,7 +128,7 @@ bool VerificarNomenclaturaPassword(char clave[10])
 						
 			if(clave[i+1]==numdigito+1)
 			{
-				return false;
+				return 0;
 			}
 						
 		}
@@ -137,7 +137,7 @@ bool VerificarNomenclaturaPassword(char clave[10])
 	
 	if(contadormayusculas >0 && contadorminusculas >0 && contadornumeros >0)
 	{
-		esValido = true;
+		esValido = 1;
 	}
 	
 	return esValido;

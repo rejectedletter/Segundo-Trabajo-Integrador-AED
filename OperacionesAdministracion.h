@@ -1,4 +1,5 @@
 #include<windows.h>
+#include <conio.h>
 #include<stdio.h>
 #include <iostream>
 #include<stdlib.h>
@@ -51,11 +52,7 @@ struct Turno
 	bool borrado;
 };
 
-void atencionporprofesional(Turno turnos[100], Cliente clientes[100]);
-void CrearNombreUsuario( Usuario usuarioNuevo);
-void CrearPassword( Usuario usuarioNuevo);
-void AgregarUsuario( Usuario usuarios[100]);
-void AgregarProfesional(Profesional profesionales);
+
 
 void MostrarMenu()
 {
@@ -131,12 +128,71 @@ void CrearNombreUsuario(Usuario usuarioNuevo)
 	   
 }
 
-void CrearPassword(Usuario usuarioNuevo)
+
+
+int CrearUsuario(FILE *arch)
 {
-	char clave[10];
-	bool esValida = false;
+	Usuario usuarioNuevo;
 	
-	printf("\n----------\n\n");
+	int esValido =0;
+	char clave [10];
+	char usuario [10];
+	
+		printf("REGISTRAR PROFESIONAL\n\n");
+				
+				
+				printf("-NOMBRE DE USUARIO\n\n");
+								
+				printf("Condiciones para nombre de usuario\n");
+				
+				printf("- Cantidad mínima 6 caracteres. Cantidad máxima 10 caracteres.\n");
+				printf("- Podran ser letras, números y/o simbolos del conjunto {+,-,/,*,?,¿,!,¡}\n\n");
+				printf("> Ser único para cada usuario registrado.\n");
+				printf("> Comenzar con una letra minúscula.\n");
+				printf("> Tener al menos 2 letras mayúsculas.\n");
+				printf("> Tener como máximo 3 dígitos.\n\n");
+				
+				printf("Ingrese nombre de usuario: ");
+				_flushall();
+				gets(usuario);
+				
+			
+				
+				esValido = VerificarNomenclaturaNombreUsuario(usuario);
+			
+				
+				while(esValido==0){
+				
+				
+					printf("\n----------\n\n");
+					
+					printf("El nombre de usuario ingresado es invalido o ya fue registrado.\n");
+					printf("Por favor, vuelva a intentarlo.\n");
+					
+					printf("\n----------\n\n");
+					
+					printf("Condiciones para nombre de usuario\n");
+				
+					printf("- Cantidad mínima 6 caracteres. Cantidad máxima 10 caracteres.\n");
+					printf("- Podran ser letras, números y/o simbolos {+,-,/,*,?,¿,!,¡}\n\n");
+					printf("> Debe Ser único para cada usuario registrado.\n");
+					printf("> Debe Comenzar con una letra minúscula.\n");
+					printf("> Debe Tener al menos 2 letras mayúsculas.\n");
+					printf("> Debe Tener como máximo 3 dígitos.\n\n");
+					
+					printf("Ingrese nombre de usuario: ");
+					_flushall();
+					gets(usuario);
+					
+					esValido = VerificarNomenclaturaNombreUsuario(usuario);
+				}
+	
+	printf("\n\n>>>NOMBRE DE USUARIO CORRECTO<<<\n");
+	
+	strcpy(usuarioNuevo.usuario, usuario);
+	
+	
+    	printf("\n----------\n\n");
 				
 				printf("-CONTRASEÑA DE USUARIO\n\n");
 				
@@ -152,9 +208,11 @@ void CrearPassword(Usuario usuarioNuevo)
 				_flushall();
 				gets(clave);
 				
-				esValida = VerificarNomenclaturaPassword(clave);
+				esValido = VerificarNomenclaturaPassword(clave);
+				_flushall();
+				printf("%s", clave);
 				
-				while(esValida==false)
+				while(esValido==0)
 				{
 					printf("\n----------\n\n");
 					
@@ -175,43 +233,39 @@ void CrearPassword(Usuario usuarioNuevo)
 					_flushall();
 					gets(clave);
 					
-					esValida = VerificarNomenclaturaPassword(clave);
+					esValido = VerificarNomenclaturaPassword(clave);
 				}
 				
 				printf("\n-CONTRASEÑA CORRECTA-\n\n");
-				
+				_flushall();
 				strcpy(usuarioNuevo.clave, clave);
+				
+					printf("\n----------\n\n");
+					
+					printf("Ingrese apellido y nombre: ");
+					scanf("%s",&usuarioNuevo.apeNom);
 				
 				printf("\n\n>>>USUARIO REGISTRADO CORRECTAMENTE<<<\n");
 				
 				printf("\n>");
 				system("pause");
-}
-
-void AgregarUsuario()
-{
-	Usuario usuarioNuevo;
-    
-    
-    
-    CrearNombreUsuario(usuarioNuevo);
-    CrearPassword(usuarioNuevo);
+   
 	
-	FILE *arch;
-		
-	arch=fopen("Usuarios.dat","r+b");
-		
-		if(arch==NULL)
+	
+	
+	int contador = 1; //para validar si se carga el registro
+	try{ // try para manejar excepciones si se produce una pasa al catch
+		if (fwrite(&usuarioNuevo,sizeof(Usuario),contador,arch) < contador)
 		{
-			arch=fopen("Usuarios.dat","w+b");
-			fwrite(&usuarioNuevo,sizeof(Usuario),1,arch);
-		}
-		else
-		{
-			arch=fopen("Usuarios.dat","a+b");
-		
-			fwrite(&usuarioNuevo,sizeof(Usuario),1,arch);
-		}
+		    printf("\nError al guardar el registro...");
+		    exit(EXIT_FAILURE);
+		}	
+		return 0;
+	}
+	catch (int e)
+	{
+	    return 1;
+	}		
 	
 	
 }
