@@ -128,13 +128,32 @@ void CrearNombreUsuario(Usuario usuarioNuevo)
 	   
 }
 
-int GenerarIdAsc(FILE * arch)
+int GenerarIdAsc()
 {
 	Profesional pro;
+	int id =0;
+	int cont =0;
 	
-	fread(&pro, sizeof(Profesional), 1, arch);
+	FILE *pros;
+	pros = fopen("Profesionales.dat", "rb");
 	
-	return pro.id + 1;
+	fread(&pro, sizeof(Profesional), 1, pros);
+
+
+	/*fseek(pros, 0, SEEK_END);
+	if(ftell(pros)==0)
+	{
+		return 1;
+	}*/
+		
+	while(!feof(pros))
+	{
+		id = pro.id;
+		printf("%d", pro.id);
+		fread(&pro, sizeof(Profesional), 1, pros);
+	}
+	
+	return id + 1;
 }
 
 int CrearUsuario(FILE *arch)
@@ -297,9 +316,9 @@ int AgregarProfesional(FILE *arch)
 	}
 	
 		
-		/////////////////////////////////////////////
+	
 		
-		profesionalNuevo.id = GenerarIdAsc(arch);
+		profesionalNuevo.id = GenerarIdAsc();
 		
 		printf("\n Ingresar DNI del Profesional: ");
 		_flushall();
@@ -309,13 +328,11 @@ int AgregarProfesional(FILE *arch)
 		_flushall();
 		gets(profesionalNuevo.telefono);
 
-		printf("%s",profesionalNuevo.apeNom);
-
-		printf("%d",profesionalNuevo.id);
+	
 			
 		
 		try{ // try para manejar excepciones si se produce una pasa al catch
-		if (fwrite(&profesionalNuevo,sizeof(Profesional),contador,arch) < contador)
+		if (fwrite(&profesionalNuevo,sizeof(Profesional),1,arch) < contador)
 		{
 		    printf("\nError al guardar el registro...");
 		    exit(EXIT_FAILURE);

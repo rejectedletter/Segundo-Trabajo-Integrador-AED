@@ -10,9 +10,9 @@
 main()
 {
 	//Leer todo
-	FILE *arch;
+/*	FILE *arch;
 	
-		arch = fopen("Usuarios.dat","r+b"); //si no existe lo abro creando
+		arch = fopen("Usuarios.dat","rb"); //si no existe lo abro creando
 	
 	if(arch == NULL){ //
 		arch = fopen("Usuarios.dat","a+b"); 
@@ -20,7 +20,7 @@ main()
 	
 	FILE *archProfesional;
 	
-		archProfesional = fopen("Profesionales.dat","r+b"); //si no existe lo abro creando
+		archProfesional = fopen("Profesionales.dat","wb"); //si no existe lo abro creando
 	
 	if(archProfesional == NULL){ //
 		archProfesional = fopen("Profesionales.dat","a+b"); 
@@ -28,11 +28,21 @@ main()
 	
 	FILE *archTurnos;
 	
-		archTurnos = fopen("Turnos.dat","r+b"); //si no existe lo abro creando
+		archTurnos = fopen("Turnos.dat","rb"); //si no existe lo abro creando
 	
 	if(archTurnos == NULL){ //
 		archTurnos = fopen("Turnos.dat","a+b"); 
 	}
+	*/
+	
+	FILE *arch;
+	FILE *archProfesional;
+	FILE *archTurnos;
+	
+	
+	arch = fopen("Usuarios.dat","ab");
+	archProfesional = fopen("Profesionales.dat","ab");
+	archTurnos = fopen("Turnos.dat","ab"); 
 	
 //	FILE *archProfesional;
 	
@@ -78,6 +88,7 @@ main()
 			
 			case 3:
 				system("cls");
+				id=0;
 				
 				printf("ATENCIONES POR PROFESIONAL\n\n");
 				
