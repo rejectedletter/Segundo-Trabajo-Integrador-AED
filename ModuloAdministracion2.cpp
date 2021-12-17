@@ -20,6 +20,22 @@ main()
 	
 	FILE *archProfesional;
 	
+		archProfesional = fopen("Profesionales.dat","r+b"); //si no existe lo abro creando
+	
+	if(archProfesional == NULL){ //
+		archProfesional = fopen("Profesionales.dat","a+b"); 
+	}
+	
+	FILE *archTurnos;
+	
+		archTurnos = fopen("Turnos.dat","r+b"); //si no existe lo abro creando
+	
+	if(archTurnos == NULL){ //
+		archTurnos = fopen("Turnos.dat","a+b"); 
+	}
+	
+//	FILE *archProfesional;
+	
 	Profesional profesional;
 	Turno turnos[100];
 	
@@ -45,7 +61,7 @@ main()
 			case 1:
 				system("cls");
 				
-			   AgregarProfesional(profesional);
+			   AgregarProfesional(archProfesional);
 			   
 				printf("\n>");
 				system("pause");
@@ -69,7 +85,7 @@ main()
 			    printf("Ingrese id del profesional a consultar turnos:\n");
 			    scanf("%d", &id);
 			    
-			    MostrarAtencionPorProfesional(id);
+			    MostrarAtencionPorProfesional(id, archProfesional, archTurnos);
 				
 				printf(">");
 				system("pause");

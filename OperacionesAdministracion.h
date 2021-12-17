@@ -138,117 +138,108 @@ int CrearUsuario(FILE *arch)
 	char clave [10];
 	char usuario [10];
 	
-		printf("REGISTRAR PROFESIONAL\n\n");
+	printf("REGISTRAR PROFESIONAL\n\n");
 				
-				
-				printf("-NOMBRE DE USUARIO\n\n");
+	printf("-NOMBRE DE USUARIO\n\n");
 								
-				printf("Condiciones para nombre de usuario\n");
+	printf("Condiciones para nombre de usuario\n");
 				
-				printf("- Cantidad mínima 6 caracteres. Cantidad máxima 10 caracteres.\n");
-				printf("- Podran ser letras, números y/o simbolos del conjunto {+,-,/,*,?,¿,!,¡}\n\n");
-				printf("> Ser único para cada usuario registrado.\n");
-				printf("> Comenzar con una letra minúscula.\n");
-				printf("> Tener al menos 2 letras mayúsculas.\n");
-				printf("> Tener como máximo 3 dígitos.\n\n");
+	printf("- Cantidad mínima 6 caracteres. Cantidad máxima 10 caracteres.\n");
+	printf("- Podran ser letras, números y/o simbolos del conjunto {+,-,/,*,?,¿,!,¡}\n\n");
+	printf("> Ser único para cada usuario registrado.\n");
+	printf("> Comenzar con una letra minúscula.\n");
+	printf("> Tener al menos 2 letras mayúsculas.\n");
+	printf("> Tener como máximo 3 dígitos.\n\n");
 				
-				printf("Ingrese nombre de usuario: ");
-				_flushall();
-				gets(usuario);
+	printf("Ingrese nombre de usuario: ");
+	_flushall();
+	gets(usuario);
 				
+	esValido = VerificarNomenclaturaNombreUsuario(usuario);
 			
+	while(esValido==0){
 				
-				esValido = VerificarNomenclaturaNombreUsuario(usuario);
-			
-				
-				while(esValido==0){
-				
-				
-					printf("\n----------\n\n");
+	printf("\n----------\n\n");
+	printf("El nombre de usuario ingresado es invalido o ya fue registrado.\n");
+	printf("Por favor, vuelva a intentarlo.\n");
+	printf("\n----------\n\n");
+	printf("Condiciones para nombre de usuario\n");
+	printf("- Cantidad mínima 6 caracteres. Cantidad máxima 10 caracteres.\n");
+	printf("- Podran ser letras, números y/o simbolos {+,-,/,*,?,¿,!,¡}\n\n");
+	printf("> Debe Ser único para cada usuario registrado.\n");
+	printf("> Debe Comenzar con una letra minúscula.\n");
+	printf("> Debe Tener al menos 2 letras mayúsculas.\n");
+	printf("> Debe Tener como máximo 3 dígitos.\n\n");
 					
-					printf("El nombre de usuario ingresado es invalido o ya fue registrado.\n");
-					printf("Por favor, vuelva a intentarlo.\n");
+	printf("Ingrese nombre de usuario: ");
+	_flushall();
+	gets(usuario);
 					
-					printf("\n----------\n\n");
-					
-					printf("Condiciones para nombre de usuario\n");
-				
-					printf("- Cantidad mínima 6 caracteres. Cantidad máxima 10 caracteres.\n");
-					printf("- Podran ser letras, números y/o simbolos {+,-,/,*,?,¿,!,¡}\n\n");
-					printf("> Debe Ser único para cada usuario registrado.\n");
-					printf("> Debe Comenzar con una letra minúscula.\n");
-					printf("> Debe Tener al menos 2 letras mayúsculas.\n");
-					printf("> Debe Tener como máximo 3 dígitos.\n\n");
-					
-					printf("Ingrese nombre de usuario: ");
-					_flushall();
-					gets(usuario);
-					
-					esValido = VerificarNomenclaturaNombreUsuario(usuario);
-				}
+	esValido = VerificarNomenclaturaNombreUsuario(usuario);
+	}
 	
 	printf("\n\n>>>NOMBRE DE USUARIO CORRECTO<<<\n");
 	
 	strcpy(usuarioNuevo.usuario, usuario);
 	
 	
-    	printf("\n----------\n\n");
+    printf("\n----------\n\n");
 				
-				printf("-CONTRASEÑA DE USUARIO\n\n");
+	printf("-CONTRASEÑA DE USUARIO\n\n");
 				
-				printf("Condiciones para contraseña de usuario\n");
+	printf("Condiciones para contraseña de usuario\n");
 				
-				printf("- Cantidad mínima 6 caracteres. Cantidad máxima 32 caracteres.\n");
-				printf("- Debe contener al menos una mayúscula, una minúscula y un número.\n");
-				printf("- No podrá contener ningún carácter de puntuación, ni acentos, ni espacios. Sólo caracteres alfanuméricos.\n");
-				printf("- No debe tener más de 3 caracteres numéricos consecutivos\n");
-				printf("- No debe tener 2 caracteres consecutivos que refieran a letras alfabéticamente consecutivas (ascendentemente).\n\n");
+	printf("- Cantidad mínima 6 caracteres. Cantidad máxima 32 caracteres.\n");
+	printf("- Debe contener al menos una mayúscula, una minúscula y un número.\n");
+	printf("- No podrá contener ningún carácter de puntuación, ni acentos, ni espacios. Sólo caracteres alfanuméricos.\n");
+	printf("- No debe tener más de 3 caracteres numéricos consecutivos\n");
+	printf("- No debe tener 2 caracteres consecutivos que refieran a letras alfabéticamente consecutivas (ascendentemente).\n\n");
 				
-				printf("Ingrese contraseña de usuario: ");
-				_flushall();
-				gets(clave);
+	printf("Ingrese contraseña de usuario: ");
+	_flushall();
+	gets(clave);
 				
-				esValido = VerificarNomenclaturaPassword(clave);
-				_flushall();
-				printf("%s", clave);
+	esValido = VerificarNomenclaturaPassword(clave);
+	_flushall();
+	printf("%s", clave);
 				
-				while(esValido==0)
-				{
-					printf("\n----------\n\n");
+	while(esValido==0)
+	{
+		printf("\n----------\n\n");
 					
-					printf("La contraseña del usuario ingresada es invalida.\n");
-					printf("Por favor, vuelva a intentarlo.\n");
+		printf("La contraseña del usuario ingresada es invalida.\n");
+		printf("Por favor, vuelva a intentarlo.\n");
 					
-					printf("\n----------\n\n");
+		printf("\n----------\n\n");
 					
-						printf("Condiciones para contraseña de usuario\n");
+		printf("Condiciones para contraseña de usuario\n");
 				
-					printf("- Cantidad mínima 6 caracteres. Cantidad máxima 32 caracteres.\n");
-					printf("- Debe contener al menos una mayúscula, una minúscula y un número.\n");
-					printf("- No podrá contener ningún carácter de puntuación, ni acentos, ni espacios. Sólo caracteres alfanuméricos.\n");
-					printf("- No debe tener más de 3 caracteres numéricos consecutivos\n");
-					printf("- No debe tener 2 caracteres consecutivos que refieran a letras alfabéticamente consecutivas (ascendentemente).\n\n");
+		printf("- Cantidad mínima 6 caracteres. Cantidad máxima 32 caracteres.\n");
+		printf("- Debe contener al menos una mayúscula, una minúscula y un número.\n");
+		printf("- No podrá contener ningún carácter de puntuación, ni acentos, ni espacios. Sólo caracteres alfanuméricos.\n");
+		printf("- No debe tener más de 3 caracteres numéricos consecutivos\n");
+		printf("- No debe tener 2 caracteres consecutivos que refieran a letras alfabéticamente consecutivas (ascendentemente).\n\n");
 					
-					printf("Ingrese contraseña de usuario: ");
-					_flushall();
-					gets(clave);
+		printf("Ingrese contraseña de usuario: ");
+		_flushall();
+		gets(clave);
 					
-					esValido = VerificarNomenclaturaPassword(clave);
-				}
+		esValido = VerificarNomenclaturaPassword(clave);
+	}
 				
-				printf("\n-CONTRASEÑA CORRECTA-\n\n");
-				_flushall();
-				strcpy(usuarioNuevo.clave, clave);
+		printf("\n-CONTRASEÑA CORRECTA-\n\n");
+		_flushall();
+		strcpy(usuarioNuevo.clave, clave);
 				
-					printf("\n----------\n\n");
+		printf("\n----------\n\n");
 					
-					printf("Ingrese apellido y nombre: ");
-					scanf("%s",&usuarioNuevo.apeNom);
+		printf("Ingrese apellido y nombre: ");
+		scanf("%s",&usuarioNuevo.apeNom);
 				
-				printf("\n\n>>>USUARIO REGISTRADO CORRECTAMENTE<<<\n");
+		printf("\n\n>>>USUARIO REGISTRADO CORRECTAMENTE<<<\n");
 				
-				printf("\n>");
-				system("pause");
+		printf("\n>");
+		system("pause");
    
 	
 	
@@ -270,12 +261,12 @@ int CrearUsuario(FILE *arch)
 	
 }
 
-void AgregarProfesional(Profesional profesionales)
+int AgregarProfesional(FILE *arch)
 {
 	Profesional profesionalNuevo;
 	int tamano =0;
-	int contador=0;
-	FILE *arch;
+	int contador=1;
+	
 	
 	printf("-DATOS DE PROFESIONAL\n\n");
 	
@@ -299,7 +290,7 @@ void AgregarProfesional(Profesional profesionales)
 	}
 	
 		
-		
+		/////////////////////////////////////////////
 		
 		printf("\nIngresar id del Profesional: ");
 		scanf("%d", &profesionalNuevo.idProfesional);
@@ -310,24 +301,25 @@ void AgregarProfesional(Profesional profesionales)
 		
 		printf("\n Ingresar telefono del Profesional: ");
 		_flushall();
-		scanf("%d", &profesionalNuevo.telefono);
+		gets(profesionalNuevo.telefono);
+		
+		printf("%s",&profesionalNuevo.apeNom);
+		printf("%s",&profesionalNuevo.telefono);
+		printf("%d",&profesionalNuevo.idProfesional);
 			
 		
-		
-		
-		arch=fopen("Profesionales.dat","r+b");
-		
-		if(arch==NULL)
+		try{ // try para manejar excepciones si se produce una pasa al catch
+		if (fwrite(&profesionalNuevo,sizeof(Profesional),contador,arch) < contador)
 		{
-			arch=fopen("Profesionales.dat","w+b");
-			fwrite(&profesionalNuevo,sizeof(Profesional),1,arch);
-		}
-		else
-		{
-			arch=fopen("Profesionales.dat","a+b");
-		
-			fwrite(&profesionalNuevo,sizeof(Profesional),1,arch);
-		}
+		    printf("\nError al guardar el registro...");
+		    exit(EXIT_FAILURE);
+		}	
+		return 0;
+	}
+	catch (int e)
+	{
+	    return 1;
+	}	
 	
 
 		
@@ -343,98 +335,91 @@ void AgregarProfesional(Profesional profesionales)
 
  
 
-bool MostrarAtencionPorProfesional(int idProfesional)
+int MostrarAtencionPorProfesional(int idProfesional, FILE *profesionales, FILE *turnos)
 {
-
-	
-	
-	
-	
-	
-	
-	
-	FILE *archturnos, *archcliente, *archProfesionales;
-	
-	
-	
-	bool existe=false;
-	
-	Turno auxturnos;
-	Cliente  auxcliente;
 	Profesional profesional;
+	Turno turno;
+	char nombreProfesional[60];
 	
+	fread(&profesional, sizeof(Profesional), 1, profesionales);
+	fread(&turno, sizeof(Turno), 1, turnos);
 	
+	printf("pro %d", profesional.idProfesional);	
 	
+	int existeProfesional =0;
 	
-	archturnos=fopen("Turnos.dat", "rb");
-	archcliente=fopen("Clientes.dat", "rb");
-	archProfesionales=fopen("Profesionales.dat", "rb");
-	
-	if(archturnos==NULL)
+	while(!feof(profesionales))
 	{
-		printf("Aun no se ha registrado ningún turno.\n");
-		return false;
-	}
-	if(archcliente==false)
-	{
-		printf("No se encontraron clientes\n");
-		return NULL;
-	}
-	if(archProfesionales==false)
-	{
-		printf("No se encontraron profesionales\n");
-		return false;
-	}
-
-		fread(&auxturnos, sizeof(Turno), 1, archturnos);
-		fread(&auxcliente, sizeof(Cliente), 1, archcliente);
-		fread(&profesional, sizeof(Profesional), 1, archProfesionales);
-	
-		while(!feof(archturnos))
+		if(profesional.idProfesional == idProfesional)
 		{
-			while(!feof(archcliente))
-			{
-			
-				while(!feof(archProfesionales))
-				{
-					if(auxturnos.idProfesional==idProfesional)
+			existeProfesional = 1;
+		}
+		
+		fread(&profesional, sizeof(Profesional), 1, profesionales);
+	}
+	
+	if(existeProfesional == 0)
+	{
+		printf("No se encontró profesional\n");
+		return 0;
+	}
+	else
+	{
+		strcpy(nombreProfesional, profesional.apeNom);
+		printf("Profesional: %s\n", nombreProfesional);
+	}
+	
+	
+	
+	if(turnos == NULL || strcmp(turno.detalle, ""))
+	{
+		printf("No se encontraron turnos\n");
+		return 0;
+	}
+	
+	/*if(profesional.idProfesional==idProfesional)
+	{
+		strcpy(nombreProfesional, profesional.apeNom);
+		printf("Profesional: %s\n", nombreProfesional);
+	}*/
+	
+	
+	while(!feof(turnos))
+	{
+		while(!feof(profesionales))
+		{
+			if(turno.idProfesional==idProfesional)
 					{
 						printf("\n----------\n\n");
 				
-						printf("Fecha de atención: %-0.2d/%-0.2d/%d", auxturnos.fechaTurno.dia, auxturnos.fechaTurno.mes, auxturnos.fechaTurno.anio);
+						printf("Fecha de atención: %-0.2d/%-0.2d/%d", turno.fechaTurno.dia, turno.fechaTurno.mes, turno.fechaTurno.anio);
 								
-						printf("\nDNI del Cliente: %d", auxturnos.dniCliente);
+						printf("\nDNI del Cliente: %d", turno.dniCliente);
 						
-						printf("\nMatricula del Profesional que atendió: %d", auxturnos.idProfesional);
+						printf("\nMatricula del Profesional que atendió: %d", turno.idProfesional);
 						
 						
 				
-						printf("\nDetalle de la consulta: %s", auxturnos.detalle);
+						printf("\nDetalle de la consulta: %s", turno.detalle);
 				
 						printf("\n\n");
 					}
 					
-					fread(&profesional, sizeof(Profesional), 1, archProfesionales);
-				}
-			
-			
-			fread(&auxcliente, sizeof(Cliente), 1, archcliente);
-		   }
-		   
-		   fread(&auxturnos, sizeof(Turno), 1, archturnos);
+					fread(&profesional, sizeof(Profesional), 1, profesionales);
 		}
 		
-		if(existe==false)
-		{
-			printf("\n>No se ha realizado ningún turno en el mes seleccionado.\n\n");
-		}
+		fread(&turno, sizeof(Turno), 1, turnos);
+	}
 	
-	return true;	
+	
+	
+		
+	return 1;	
 		
 	
 	}	
 	
-	RankingProfesional()
+	int RankingProfesional()
 	{
 			
 	FILE *archprofesional, *archturnos;

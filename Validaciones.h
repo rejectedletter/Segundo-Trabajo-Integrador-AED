@@ -4,14 +4,14 @@
 #include<string.h>
 #include<locale.h>
 
-bool VerificarNomenclaturaNombreUsuario(char nombre[10])
+int VerificarNomenclaturaNombreUsuario(char nombre[10])
 {
 	int tamano = 0;
 	int contadormayusculas=0;
 	int contadorNumeros = 0;
 	int contadordigitos=0;
 	
-	int esValido=false;
+	int esValido=0;
 	
 	
 	
