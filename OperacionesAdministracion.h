@@ -26,7 +26,7 @@ struct Usuario
 struct  Profesional
 {
 	char apeNom [60];
-	int idProfesional;
+	int id;
 	int  dni;
 	char telefono[25];
 };
@@ -128,7 +128,14 @@ void CrearNombreUsuario(Usuario usuarioNuevo)
 	   
 }
 
-
+int GenerarIdAsc(FILE * arch)
+{
+	Profesional pro;
+	
+	fread(&pro, sizeof(Profesional), 1, arch);
+	
+	return pro.id + 1;
+}
 
 int CrearUsuario(FILE *arch)
 {
@@ -292,8 +299,7 @@ int AgregarProfesional(FILE *arch)
 		
 		/////////////////////////////////////////////
 		
-		printf("\nIngresar id del Profesional: ");
-		scanf("%d", &profesionalNuevo.idProfesional);
+		profesionalNuevo.id = GenerarIdAsc(arch);
 		
 		printf("\n Ingresar DNI del Profesional: ");
 		_flushall();
@@ -302,10 +308,10 @@ int AgregarProfesional(FILE *arch)
 		printf("\n Ingresar telefono del Profesional: ");
 		_flushall();
 		gets(profesionalNuevo.telefono);
-		
-		printf("%s",&profesionalNuevo.apeNom);
-		printf("%s",&profesionalNuevo.telefono);
-		printf("%d",&profesionalNuevo.idProfesional);
+
+		printf("%s",profesionalNuevo.apeNom);
+
+		printf("%d",profesionalNuevo.id);
 			
 		
 		try{ // try para manejar excepciones si se produce una pasa al catch
@@ -344,13 +350,13 @@ int MostrarAtencionPorProfesional(int idProfesional, FILE *profesionales, FILE *
 	fread(&profesional, sizeof(Profesional), 1, profesionales);
 	fread(&turno, sizeof(Turno), 1, turnos);
 	
-	printf("pro %d", profesional.idProfesional);	
+	printf("pro %d", profesional.id);	
 	
 	int existeProfesional =0;
 	
 	while(!feof(profesionales))
 	{
-		if(profesional.idProfesional == idProfesional)
+		if(profesional.id == idProfesional)
 		{
 			existeProfesional = 1;
 		}
@@ -419,7 +425,7 @@ int MostrarAtencionPorProfesional(int idProfesional, FILE *profesionales, FILE *
 	
 	}	
 	
-	int RankingProfesional()
+int RankingProfesional()
 	{
 			
 	FILE *archprofesional, *archturnos;
@@ -459,7 +465,7 @@ int MostrarAtencionPorProfesional(int idProfesional, FILE *profesionales, FILE *
 				
 				fread(&auxprofesional, sizeof(Profesional), 1, archprofesional);
 				
-				idProfesional=auxprofesional.idProfesional;
+				idProfesional=auxprofesional.id;
 				
 				fread(&auxturnos, sizeof(Turno), 1, archturnos);
 				
@@ -503,4 +509,6 @@ int MostrarAtencionPorProfesional(int idProfesional, FILE *profesionales, FILE *
 		}
 }
 	}
+	
+
 

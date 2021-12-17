@@ -43,7 +43,7 @@ struct Turnos
     fecha fechaTurno;
     int dniCliente;
     char detalleAtencion[380];
-    bool borrado;
+   
 };
 
 void iniciarSesion(FILE *puntero,bool &iniciar,int &id);
